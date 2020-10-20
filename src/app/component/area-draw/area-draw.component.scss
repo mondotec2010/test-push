@@ -1,0 +1,19 @@
+.container {
+    // box-sizing: border-box;
+    position: relative;
+    width: 610px; 
+    height: 625px;
+}
+
+.action-button {
+    position: absolute;
+    bottom: 0px;
+}
+
+#reset-button {
+    left: 15px;
+}
+
+#save-button {
+    right: 15px;
+}

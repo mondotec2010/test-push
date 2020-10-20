@@ -1,0 +1,376 @@
+hr {
+    margin-top: 50px;
+    background-color: rgba(255, 0, 0, 0);
+    margin-bottom: 50px;
+}
+
+#new-message-window {
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    top: 70px;
+    width: 100%;
+    height: calc(100vh - 70px);
+}
+
+#sender-container {
+    display: block;
+}
+
+#aree-container {
+    display: block;
+}
+
+#maps-container {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 423px;
+    // background-color: red;
+    border-top: rgb(191, 191, 191) 1px solid;
+    border-bottom: rgb(191, 191, 191) 1px solid;
+}
+
+.maps-list {
+    position: absolute;
+    right: 0;
+    width: calc(100% - 420px);
+    height: 100%;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    // border-top: rgb(191, 191, 191) 1px solid;
+    // border-bottom: rgb(191, 191, 191) 1px solid;
+    // border-right: rgb(191, 191, 191) 1px solid;
+}
+.maps-list-cover {
+    z-index: 24;
+    background-image: linear-gradient(to right, #ffffff00, #ffffff00, #ffffff);
+}
+
+#maps-empty {
+    position: absolute;
+    left: 0;
+    width: 420px;
+    height: 100%;
+    z-index: 24;
+    background-color: rgb(238, 238, 238);
+}
+#maps-empty span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+}
+
+.maps-list-item {
+    display: block;
+    font-size: 14px;
+    // margin: auto;
+    // width: calc(100% - 420px);
+}
+
+#new-message-header {
+    position: relative;
+    padding: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-bottom: rgb(191, 191, 191) 1px solid;
+    height: 35px;
+}
+
+#new-message-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 0%;
+    width: 100%;
+    height: calc(80vh - 35px);
+}
+mat-progress-bar {
+    position: absolute;
+    top: 35px;
+    left: 0;
+}
+
+#new-message-form-container {
+    display: block;
+    // overflow: scroll;
+    width: 100%;
+    height: 550px;
+}
+
+#new-message-form-title {
+    display: block;
+    position: absolute;
+    left: 0;
+}
+
+#exit-form-control {
+    display: block;
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    padding-top: 3px;
+    text-align: center;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: grey;
+    cursor: default;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+        color: #e71616;
+    }
+}
+#parent {
+display:flex;
+margin-top:30px;
+}
+
+.left {
+flex:1;
+}
+
+.right{
+  width: 300px;
+}
+
+#search-div {
+  position: absolute;
+  width: 400px;
+  height: 30px;
+  top: 30%;
+  transform: translateY(-50%);
+  overflow: hidden;
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+
+.sender-field {
+    width: 40%;
+    margin-top:25px;
+    margin-left:-10px;
+}
+
+.category-field {
+    width: 33%;
+    margin-left:50px;
+}
+
+.subject-field {
+    width: 100%;
+}
+.subject-field input {
+    // caret-color: black;
+}
+
+.body-field {
+    width: 100%;
+    // height: 300px;
+}
+.body-field textarea {
+    min-height: 100px;
+    overflow: hidden;
+    // caret-color: black;
+}
+.body-field small {
+    display: inline-block;
+    width: 50%;
+}
+
+#lang-hint {
+    position: absolute;
+    right: 0;
+    text-align: right;
+}
+
+.link-field {
+    position: relative;
+    left: 55px;
+    width: 55%;
+}
+
+.aree-field {
+    width: 100%;
+    // height: 300px;
+}
+
+.checkbox-margin {
+  margin: 0 12px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.dateTime-container {
+    display: block;
+    position: relative;
+    // background-color: red;
+    width: 40%;
+    height: 80px;
+    float:right;
+    padding-top:20px;
+}
+
+.dateTime-container3 {
+    display: block;
+    position: relative;
+    // background-color: red;
+    width: 50%;
+    height: 80px;
+    float:left;
+    margin-top:60px;
+    margin-left:-10px;
+}
+
+#dateTime-container2 {
+    position: relative;
+    // display: flex;
+    // justify-content: flex-end;
+    // flex-direction: row;
+    // background-color: red;
+    width: 100%;
+    min-height: 480px;
+}
+#inizio-validità-container{
+    position: absolute;
+    left: 0px;
+    top: 5%;
+}
+#scadenza-container{
+    position: absolute;
+    right: 0px;
+    top: 5%;
+}
+// owl-date-time-container {
+//     display: block;
+// }
+
+.inizio-date-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 50%;
+}
+
+.scadenza-date-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 50%;
+    float:left;
+}
+
+.inizio-time-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: block;
+    font-size: 14px;
+}
+
+.scadenza-time-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: block;
+    font-size: 14px;
+    // width: 30%;
+}
+
+#whereapp-submit-button {
+    width: 100%;
+    font-size: 17px;
+    letter-spacing: 0.4px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+#whereapp-next-button {
+    width: 30%;
+    font-size: 17px;
+    letter-spacing: 0.4px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left:600px;
+    color: white;
+    // background-color: red;
+}
+
+#whereapp-previous-button {
+    width: 30%;
+    font-size: 17px;
+    letter-spacing: 0.4px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left:600px;
+    color:black;
+    // background-color: red;
+}
+
+#whereapp-cap-submit-button {
+    width: 100%;
+    font-size: 17px;
+    letter-spacing: 0.4px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: white;
+    // background-color: red;
+}
+
+
+#warning-icon{
+    position: relative;
+    font-size: 24px;
+    margin-right: 8px;
+    top: -3px;
+}
+
+#problem-icon{
+    position: relative;
+    font-size: 24px;
+    margin-right: 8px;
+    top: -1px;
+}
+
+.expiring-warning {
+    color: orange;
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+}
+
+.expiring-problem {
+    color: red;
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+}
+
+.expansion-panel-title {
+  font-weight: bold;
+  color:black;
+  font-size:18px;
+}
+
+.iconTimes{
+    width:18px;
+    height:18px;
+}
+
+

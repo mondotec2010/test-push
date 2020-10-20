@@ -1,0 +1,194 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Dipendenza per NgBoostrap */
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'); 
+/* Importa fonts */
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhai+2|Baloo+Chettan+2&display=swap');
+/* Dipendenze fontawesome per le icone */
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+// Stile per il datetimepicker di DanielYKPan
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+/* Dipendenze per le icone delle bandiere */
+@import './assets/css/flag-icon.min.css';
+
+* {
+    font-family: 'Baloo Chettan 2', cursive ;
+}
+
+html, body {
+    height: 100vh;
+    min-width: 1000px;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+}
+
+button {
+    outline: none !important;
+}
+
+.custom-dialog-container .mat-dialog-container {
+    padding: 0;
+}
+
+.loading {
+    background: #ffffff;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: fixed;
+}
+
+.loading-2 {
+    background: #ffffff00;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: fixed;
+}
+
+.spinner {
+    opacity: 1;
+    bottom: calc(0% - 50px);
+    left: calc(50% - 50px);
+    z-index: 10000;
+    position: absolute;
+}
+
+.button-link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.font-size-16 {
+    font-size: 15px;
+}
+
+/* Togliendo responsiveness */
+
+/* @media(min-width: 1280px) {
+    .mobile-large {}
+}
+
+@media( max-width: 990px) {
+    .mobile-medium {
+        display: none;
+    }
+    .mobile-on {
+        font-size: 12px;
+    }
+    .mat-progress-bar {
+        height: 5px !important;
+    }
+    .mat-toolbar-multiple-rows {
+        display: none !important;
+    }
+}
+
+@media(max-width: 600px) {
+    .mobile-small {
+        display: none !important;
+    }
+    .mat-cell {
+        font-size: 11px;
+    }
+    .mat-toolbar-multiple-rows {
+        display: none !important;
+    }
+} */
+
+/* ./Togliendo responsiveness */
+
+
+.mat-expansion-panel-body {
+    height: 100% !important;
+}
+
+.ng-trigger-bodyExpansion {
+    padding: 0 !important;
+}
+
+.mat-menu-item-submenu-trigger::after {
+    display: none !important;
+}
+
+.cdk-overlay-dark-backdrop {
+    background: rgba(0, 0, 0, 0.72)
+}
+
+.mat-card-content {
+    color: #000000 !important;
+}
+
+.mat-card:not([class*='mat-elevation-z']) {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.8), 0px 1px 1px 0px rgba(0, 0, 0, 0.8), 0px 1px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.pippo .mat-radio-label .mat-radio-container .mat-radio-outer-circle{
+    border-radius : 0 !important;   
+    /* width: 200px;  */
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none !important;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    padding: 0 45px !important;
+}
+
+mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    border-bottom-color: rgba(0, 0, 0, 0) !important;
+}
+
+.mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Remove Google Logo from Google Maps API map */
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}

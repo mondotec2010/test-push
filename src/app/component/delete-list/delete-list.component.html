@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Eliminare la lista?</h2>
+<hr>
+<mat-dialog-content><strong>L'operazione non è reversibile.</strong> <br>Verranno eliminati anche tutti gli utenti associati alla lista. Continuare?</mat-dialog-content>
+<hr>
+<mat-dialog-actions id="action-div">
+    <button mat-stroked-button (click)="closeCancelling()">Annulla</button>
+    <button mat-stroked-button color="warn" (click)="closeDeleting()">Elimina</button>
+</mat-dialog-actions>

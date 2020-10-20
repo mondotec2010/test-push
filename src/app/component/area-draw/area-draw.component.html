@@ -1,0 +1,19 @@
+
+<div class="container">
+    <agm-map #AgmMap 
+    style="width: 580px; height: 580px;" 
+    (mapReady)="onMapReady($event)" 
+    [zoomControl]="true"
+    [scrollwheel]="true"
+    [streetViewControl]="false"
+    [latitude]="41.2925" [longitude]="12.56738"
+    [zoom]="5"> 
+    <!-- <div *ngFor="let area of this.aree;">
+    <agm-data-layer 
+    (layerClick)="clicked($event)" 
+    [style]="styleFunc"></agm-data-layer>
+    </div>   -->
+    </agm-map>
+    <button mat-stroked-button id="reset-button" class="action-button" (click)="resetDrawing()" >reset</button>
+    <button mat-stroked-button id="save-button" class="action-button" (click)="saveDrawing()" color="primary">save</button>
+</div>

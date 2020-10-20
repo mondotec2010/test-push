@@ -1,0 +1,134 @@
+.container-fluid {
+    position: relative;
+    height: 63vh;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#loading-spinner {
+    z-index: 24;
+    position: absolute;
+    left: 290px;
+    top: 13px;
+}
+
+#searchList-container {
+    position: absolute;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 63vh;
+    width: 40% !important;
+    // top: 80px;
+    width: 50%;
+    right: 5px;
+    // cursor: pointer;
+    // border: 1px solid #bfbfbf;
+}
+
+#searchList-container-header {
+    position: absolute;
+    top: 0px;
+    height: 45px;
+    width: 100%;
+    // border-bottom: 1px solid rgb(191, 191, 191);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    & h1 {
+        font-size: 28px;
+    }
+    & .mat-icon {
+        font-size: 18px;
+        margin-right: 0px;
+    }
+}
+
+#searchList-container-body {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    position: relative;
+    top: 0px;
+    height: calc(63vh - 70px);
+    width: 100%;
+    border-bottom: 1px solid rgb(191, 191, 191);
+    // padding-left: 15px;
+    // padding-right: 15px;
+}
+
+.item-span {
+    display: flex;
+    align-items: flex-end;
+    font-size: 14px;
+    // margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    border-bottom: rgba(0, 0, 0, 0.12) 1px solid;
+    // border-radius: 15px;
+    // &:hover {
+    //     background: rgba(255, 102, 0, 0.05);
+    // }
+
+    & .icon-container {
+        height: 35px;
+        margin-left: 10px;
+        padding-bottom: 3px;
+        cursor: pointer;
+
+    }
+
+    & mat-icon {
+        // display: block;
+    }
+
+    & h4 {
+        // display: block;
+        height: 20px;
+        font-size: 15px;
+        margin-left: 20px;
+        margin-bottom: 5px;;
+    }
+}
+
+.mat-icon {
+    font-size: 19px;
+    padding-right: 2px;
+    padding-bottom: 4px;
+  }
+
+#searchForm-container{
+    padding: 15px;
+    position: absolute;
+    width: 60%;
+    height: 90px;
+    left: 0px;
+    // background-color: blue;
+    & mat-form-field {
+        width: 85%;
+    }
+}
+
+.map-container{
+    position: relative;
+    width: calc(60% - 35px);
+    height: calc(63vh - 80px);
+    left: 0px;
+    top: 80px;
+    // background-color: blue;
+}
+
+.no-map-to-show {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 24;
+    background-color: #e6e6e6;
+    & span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

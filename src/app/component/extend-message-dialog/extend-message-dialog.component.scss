@@ -1,0 +1,34 @@
+#action-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dateTime-container {
+    display: block;
+    position: relative;
+    // background-color: red;
+    width: 100%;
+    height: 80px;
+}
+
+.scadenza-date-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 50%;
+}
+
+.scadenza-time-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: block;
+    font-size: 14px;
+    // width: 30%;
+}
+
+mat-dialog-content {
+    overflow: hidden;
+}

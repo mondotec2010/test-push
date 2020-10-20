@@ -1,0 +1,271 @@
+hr {
+    margin-top: 50px;
+    background-color: rgba(255, 0, 0, 0);
+    margin-bottom: 50px;
+}
+
+#sender-container {
+    display: block;
+}
+
+#aree-container {
+    display: block;
+}
+
+#new-message-header {
+    position: relative;
+    padding: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-bottom: rgb(191, 191, 191) 1px solid;
+    height: 35px;
+}
+
+#new-list-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    width: 100%;
+    height: calc(80vh - 40px);
+}
+
+#new-message-form-container {
+    display: block;
+    // overflow: hidden;
+    width: 100%;
+    height: 450px;
+}
+
+#new-message-form-title {
+    display: block;
+    position: absolute;
+    left: 0;
+}
+
+#exit-form-control {
+    display: block;
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    padding-top: 3px;
+    text-align: center;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: grey;
+    cursor: default;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+        color: #e71616;
+    }
+}
+
+.sender-field {
+    width: 100%;
+}
+
+.category-field {
+    width: 100%;
+}
+
+.subject-field {
+    width: 100%; 
+}
+.subject-field input {
+    // caret-color: black; 
+}
+
+.body-field {
+    width: 100%;
+    // height: 300px;
+}
+.body-field textarea {
+    min-height: 100px;
+    overflow: hidden;
+    // caret-color: black; 
+}
+
+.aree-field {
+    width: 100%;
+    // height: 300px;
+}
+
+.dateTime-container {
+    display: block;
+    position: relative;
+    // background-color: red;
+    width: 100%;
+    height: 80px;
+}
+#dateTime-container2 {
+    position: relative;
+    // display: flex;
+    // justify-content: flex-end;
+    // flex-direction: row;
+    // background-color: red;
+    width: 100%;
+    min-height: 480px;
+}
+#inizio-validità-container{
+    position: absolute;
+    left: 0px;
+    top: 5%;
+}
+#scadenza-container{
+    position: absolute;
+    right: 0px;
+    top: 5%;
+}
+// owl-date-time-container {
+//     display: block;
+// }
+
+.inizio-date-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 50%;
+}
+
+.scadenza-date-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 50%;
+}
+
+.inizio-time-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: block;
+    font-size: 14px;
+    // width: 30%;
+}
+
+.scadenza-time-field {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: block;
+    font-size: 14px;
+    // width: 30%;
+}
+
+#whereapp-submit-button {
+    width: 100%;
+    font-size: 17px;
+    letter-spacing: 0.4px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: white;
+    // background-color: red;
+}
+
+#warning-icon{
+    position: relative;
+    font-size: 24px;
+    margin-right: 8px;
+    top: -3px;
+}
+
+#problem-icon{
+    position: relative;
+    font-size: 24px;
+    margin-right: 8px;
+    top: -1px;
+}
+
+.expiring-warning {
+    color: orange;
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+}
+
+.expiring-problem {
+    color: red;
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+}
+
+#devices-container {
+    position: relative;
+}
+
+.device-field {
+    position: relative;
+    left: 0px;
+    width: 200px;
+}
+
+#add-device-button {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+#add-device-loading {
+    position: absolute;
+    left: 20%;
+    top: 0%;
+}
+
+#deviceControlContainer {
+    // background: fuchsia;
+    position: absolute;
+    width: 18%;
+    height: 60px;
+    top: 50px;
+    left: 70%;
+}
+
+#csv-area {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    top: 0px;
+    width: 100%;
+    height: 125px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    background-color: #f1f1f1;
+    border: rgb(191, 191, 191) 1px solid;
+    border-radius: 5px;
+}
+
+.device-span{
+    transition: color 0.05s linear;
+    &:hover {
+        color: red;
+        cursor: pointer;
+    }
+}
+
+#lista-vuota-error-span {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    font-size: 13px;
+    text-align: center;
+    color: red;
+    -webkit-animation: fadein 0.2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 0.2s; /* Firefox < 16 */
+        -ms-animation: fadein 0.2s; /* Internet Explorer */
+         -o-animation: fadein 0.2s; /* Opera < 12.1 */
+            animation: fadein 0.2s;
+}
+

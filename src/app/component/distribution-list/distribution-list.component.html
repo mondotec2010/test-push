@@ -1,0 +1,143 @@
+<!-- <div class="toolbar-whereapp">
+  <mat-card id="mat-card">
+    <mat-card-header fxLayout="row" fxLayoutGap="0" class="mb-3 mt-1">
+      <div mat-card-avatar fxLayout="column" fxFlex="95px">
+        <img fxFlex="65px" style="margin-top: -2px;" src="../../../assets/App24PA assets/App24PA-logo-small.png" alt="">
+      </div>
+      <div fxLayout="column">
+        <mat-card-title fxFlexOffset="3px">App24PA</mat-card-title>
+        <mat-card-subtitle>{{'Multilang.loginSubtitle' | translate}}</mat-card-subtitle>
+      </div>
+    </mat-card-header>
+  </mat-card>
+
+  <div id="info-container">
+    <button [matMenuTriggerFor]="menu" id="menu-button">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <span></span>
+      <div id="menu-user-info">
+        <span class="menu-version-info-line"><small>Ver. 4.0</small></span>
+        <span class="menu-user-info-line" id="user-line"><small>Operatore:</small> {{ user }}</span>
+      </div>
+      <button mat-menu-item routerLink="/messages">Messaggi</button>
+      <button mat-menu-item routerLink="/distribution-list">Liste di distribuzione</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </div>
+</div> -->
+
+<app-menu></app-menu>
+
+<div class="searchbar-whereapp">
+  <div id="invia-messaggio-div">
+    <button id="invia-messaggio-button" (click)="newListDialog()">
+      <mat-icon aria-hidden="false" id="invia-messaggio-icon">add</mat-icon>
+      <span id="invia-messaggio-text">Crea Lista</span>
+    </button>
+  </div>
+
+  <!-- <div id="search-div">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+    <input spellcheck="false" type="text" #filter (click)="onClickSearchbar()" (keyup)="applyFilter($event.target.value)" placeholder="Filtra per parole chiave">
+  </div> -->
+  
+  <div id="pagination-div">
+    <mat-paginator [hidePageSize]="true"
+                  [pageSize]="50"
+                  [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+</div>
+
+<mat-progress-bar mode="indeterminate" style="position: absolute; top: 68px; z-index: 27;"
+  [hidden]="!this.loading"></mat-progress-bar>
+
+<div id="empty-list" *ngIf="emptyList">
+  <span>Non è presente ancora nessuna lista di distribuzione, creane una adesso.</span>
+</div>
+
+<div id="main-container" >
+  <!-- Tabella liste -->
+  <mat-table [dataSource]="dataSource" matSort matSortActive="subject" matSortDirection="desc" matSortStart="asc" matSortDisableClear>
+    <!-- Stato validita messaggio -->
+    <ng-container matColumnDef="validity">
+      <mat-header-cell *matHeaderCellDef fxFlex="5%" class="mobile-medium">
+        <mat-icon>
+        </mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5%" class="mobile-medium">
+      </mat-cell>
+    </ng-container>
+    <!-- Nome -->
+    <ng-container matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef fxFlex="35%" class="mobile-large" mat-sort-header>
+        Nome </mat-header-cell>
+      <mat-cell *matCellDef="let list" fxFlex="35%" class="mobile-large">
+        <span style="cursor: default" matTooltipPosition="after">{{list.distListDTO.name}}</span>
+      </mat-cell>
+    </ng-container>
+    <!-- Sender Name -->
+    <ng-container matColumnDef="senderName">
+      <mat-header-cell *matHeaderCellDef fxFlex="30%" class="mobile-large" mat-sort-header>
+        {{ 'Multilang.messageSender'| translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let list" fxFlex="30%" class="mobile-large">
+        {{list.senderName}} </mat-cell>
+    </ng-container>
+    <!-- Numero utenti -->
+    <ng-container matColumnDef="listUsers">
+      <mat-header-cell *matHeaderCellDef fxFlex="10%" class="mobile-medium" mat-sort-header>
+        Numero utenti
+      </mat-header-cell>
+      <mat-cell *matCellDef="let list" fxFlex="10%" class="mobile-medium">
+        {{list.numDev}}
+      </mat-cell>
+    </ng-container>
+    <!-- Data creazione -->
+    <ng-container matColumnDef="createdDate">
+      <mat-header-cell *matHeaderCellDef fxFlex="10%" class="mobile-medium" mat-sort-header>
+        Data creazione
+      </mat-header-cell>
+      <mat-cell style="cursor: default" *matCellDef="let list" fxFlex="10%" class="mobile-medium">
+        {{list.distListDTO.createdDate | date:"short"}}
+      </mat-cell>
+    </ng-container>
+     <!-- Data modifica -->
+     <ng-container matColumnDef="modifiedDate">
+      <mat-header-cell *matHeaderCellDef fxFlex="10%" class="mobile-medium" mat-sort-header>
+        Data ultima modifica
+      </mat-header-cell>
+      <mat-cell style="cursor: default" *matCellDef="let list" fxFlex="10%" class="mobile-medium">
+        {{list.distListDTO.modifiedDate | date:"short"}}
+      </mat-cell>
+    </ng-container>
+            
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef fxFlex="25%" class="mobile-large">
+        
+      </mat-header-cell>
+      <mat-cell *matCellDef="let list" fxFlex="25%" fxLayoutAlign="center center" class="mobile-large">
+        <button type="button" mat-stroked-button matTooltip="{{ 'DistributionList.updateList'| translate }}" [matTooltipShowDelay]="600"
+          color="accent" (click)="openEditListDialog(list.distListDTO.id, list.distListDTO.idsender, list.distListDTO.name)">
+          <mat-icon fontSet="material-icons" style="color: grey;">edit</mat-icon>
+          <!-- <i class="fa fa-pencil fa-2x" aria-hidden="true"></i> -->
+        </button>
+        <!-- <img id="csv-icon" src="../../assets/icons/csv-file.png" matTooltip="Scarica CSV utenti" alt="scarica svg"> -->
+        <button type="button" mat-stroked-button matTooltip="{{ 'DistributionList.deleteList'| translate }}" [matTooltipShowDelay]="600"
+          color="warn" style="margin-left: 10px;" (click)="openDeleteListDialog(list.distListDTO.id)">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Impostazione di righe e colonne -->
+    <mat-header-row *matHeaderRowDef=" displayedColumns; sticky: true" style="height: 64px">
+    </mat-header-row>
+    <!-- <mat-row (click)="test()" *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+  </mat-table>  
+</div>
+
+<div class="loading" *ngIf="sub === true">
+</div>

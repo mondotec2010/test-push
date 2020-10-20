@@ -1,0 +1,36 @@
+
+<mat-expansion-panel id="toolbarMobile" height="100%">
+    <mat-expansion-panel-header [collapsedHeight]="'74px'" fxLayoutAlign="start center">
+        <img src="../../assets/icons/logohd.png" alt="" style="height:64px; margin: 8px">
+        <!-- <img src="../../assets/icons/logohd.svg" alt="" style="height:64px; margin: 8px"> CUSTOMIZATION-SOLE24ORE -->
+    </mat-expansion-panel-header>
+    <div fxLayout.lt-sm="column" style="font-size: 16px" fxFlex.gt-mat="100%" fxLayoutAlign="start center">
+        <!-- <span fxFlexOffset="16px" fxFlex="100%" fxLayoutAlign="start center" style="margin-right: 16px"
+            *ngIf="authService.token">
+            {{'Multilang.user' | translate}} : {{user}}</span> -->
+        <div fxLayoutGap="16px" fxLayout.lt-sm="column" fxLayoutAlign="end center" fxFlexOffset="16px" fxFlex="100%">
+            <mat-form-field fxLayout.lt-sm="column" style="margin-bottom: 16px">
+                <mat-select [(ngModel)]="lang" (selectionChange)="selectedLangChange(lang)">
+                    <mat-option *ngFor="let lan of langs" [value]="lan.value">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                            <img [src]="lan.image" />
+                            <span>{{lan.language}}</span>
+                        </div>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>        
+            <button mat-menu-item routerLink="">
+                <mat-icon>chat
+                </mat-icon>{{ 'Multilang.menuMessage'| translate }}
+            </button>    
+            <button mat-menu-item routerLink="/distribution-list">
+                <mat-icon>list
+                </mat-icon>{{ 'DistributionList.menuButton'| translate }}
+            </button>      
+        </div>
+    </div>
+</mat-expansion-panel>
+<router-outlet></router-outlet>
+<div fxLayoutAlign="center" style="color: grey; margin-top: 16px">
+    <span></span>
+</div>

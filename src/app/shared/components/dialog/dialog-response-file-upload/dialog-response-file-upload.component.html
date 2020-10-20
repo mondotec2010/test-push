@@ -1,0 +1,27 @@
+<div class="divMessage">
+    <h1 mat-dialog-title class="h1Send"
+    >{{data.message}}</h1>
+    </div>
+    <div mat-dialog-content >
+    
+      <ul>
+        <li>
+            <p><b>FileRef:</b><br>
+          <span *ngIf="data.fileRef">&emsp;{{data.fileRef}}</span> 
+            </p>
+        </li>
+        <li>
+            <p><b>Status:</b><br>
+          <span *ngIf="data.status">&emsp;{{data.status}}</span> 
+            </p>
+        </li>
+        </ul>
+      
+    </div>
+    <div mat-dialog-actions>
+    
+    <mat-dialog-actions align="end">
+       <button mat-raised-button color="primary" (click)="close()">Ritorna</button> 
+      </mat-dialog-actions>
+    
+    </div>

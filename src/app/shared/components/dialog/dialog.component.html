@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column" *ngIf="dateMessage">
+    <h4 mat-dialog-title class=" dialog-title"> {{'Multilang.' + dateMessage | translate}} </h4>    
+    <div mat-dialog-actions fxLayoutAlign="center">
+      <button type="button" mat-button [mat-dialog-close] (click)="close()" cdkFocusInitial>OK</button>
+    </div>
+  </div>
+  <div fxLayout="column" *ngIf="dialogMessage">
+    <h4 mat-dialog-title class=" dialog-title" *ngIf="sessionButton === false && saveMapButton === false">
+      {{'Response.' + dialogMessage | translate}}</h4>
+    <h4 mat-dialog-title class="dialog-title" *ngIf="saveMapButton === true">
+        {{'Maps.mapMessageOk' | translate}}</h4>
+    <div mat-dialog-actions fxLayoutAlign="center" fxLayoutGap="8px">
+      <button type="button" mat-button [mat-dialog-close] *ngIf="senderButton === true" (click)="close()"
+        cdkFocusInitial>OK</button>
+      <button type="button" mat-stroked-button [mat-dialog-close] color="primary" *ngIf="okButton === true"
+        (click)="close()" cdkFocusInitial>OK</button>
+      <button type="button" mat-stroked-button color="primary" *ngIf="passButton === true" [mat-dialog-close]
+        (click)="return()" cdkFocusInitial>{{ 'Multilang.close' | translate }}</button>
+      <button type="button" mat-stroked-button color="primary" *ngIf="emptyListButton === true" [mat-dialog-close]
+        (click)="return()" cdkFocusInitial>{{ 'Multilang.close' | translate }}</button>
+      <button type=" button" mat-raised-button *ngIf="messButton === true" color="accent" [mat-dialog-close]
+        (click)="return()" cdkFocusInitial>{{ 'Multilang.backButton' | translate }}</button>
+      <button type="button" *ngIf="messButton === true" mat-raised-button color="primary" [mat-dialog-close]
+        (click)="onClick()" cdkFocusInitial>{{ 'Multilang.newMessage' | translate }}</button>
+      <button type="button" *ngIf="saveMapButton === true" mat-raised-button color="primary" [mat-dialog-close]
+        cdkFocusInitial>ok</button>
+    </div>
+  </div>
+  <!-- La paraculata -->
+  <div fxLayout="column" *ngIf="data.message === undefined">
+    <h4 mat-dialog-title class=" dialog-title">
+      {{'Multilang.sessionExpired'| translate}}
+    </h4>
+    <div mat-dialog-actions fxLayoutAlign="center" fxLayoutGap="8px">
+      <button type="button" mat-stroked-button [mat-dialog-close] color="primary" cdkFocusInitial>OK</button>
+    </div>
+  </div>
+  <!-- /.La paraculata -->
+</div>

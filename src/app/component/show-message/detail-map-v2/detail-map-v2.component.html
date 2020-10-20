@@ -1,0 +1,15 @@
+<!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" style="width: 100%; height: 400px;">  -->
+
+<agm-map #AgmMap 
+  style="width: 420px; height: 420px;" 
+  (mapReady)="onMapReady($event)" 
+  [zoomControl]="true"
+  [scrollwheel]="false"
+  [streetViewControl]="false"> 
+  <div *ngFor="let area of this.aree;">
+    <agm-data-layer 
+    [geoJson]="area.geomArea" 
+    (layerClick)="clicked($event)" 
+    [style]="styleFunc"></agm-data-layer>
+  </div>  
+</agm-map>

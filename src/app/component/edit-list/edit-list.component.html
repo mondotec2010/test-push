@@ -1,0 +1,86 @@
+<div>
+
+    <div id="new-message-header" class="mat-typography">
+        <h3 id="new-message-form-title"></h3>
+        <mat-icon aria-hidden="false" id="exit-form-control" (click)="closeDialogNoResult()">close</mat-icon>
+    </div>
+
+    <div id="new-list-container">
+
+        <form [formGroup]="listForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()" id="new-message-form-container">
+
+            <!-- <h4>Generali:</h4> -->
+            <div id="sender-container">
+                <mat-form-field name="idsender" ngDefaultControl class="sender-field">
+                    <mat-label>Selezionare il mittente certificato:</mat-label>
+                    <mat-select formControlName="idsender" matTooltip="Impossibile modificare in una lista esistente" [matTooltipShowDelay]="600" required>
+                        <mat-select-trigger>
+                            {{selectedSender ? selectedSender.name : ''}}
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let sender of senders" [value]="sender.id">
+                            {{sender.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="subject-field">
+                <mat-label>Nome lista:</mat-label>
+                <input matInput type="text" formControlName="name" maxlength="50" #subjectDescription required>
+                <!-- <small class="form-text text-muted"><code>{{subjectDescription.value.length}}</code> of
+                    <code>{{50}}</code>
+                    characters</small> -->
+            </mat-form-field>
+
+            <div id="devices-container">
+                <h4>Codici dispositivi:</h4>
+                <div id="deviceControlContainer">
+                    <!-- <a *ngIf="this.deviceCodeStatus==='empty'" mat-button class="link-field" id="add-device-button" (click)="addAlias()">Aggiungi</a> -->
+                    <a *ngIf="!this.validating && this.isCodeValid" mat-button class="link-field" id="add-device-button" (click)="addAlias()">Aggiungi</a>
+                    <mat-spinner *ngIf="this.validating" id="add-device-loading" diameter="40"></mat-spinner>
+                </div>
+                
+                
+                <mat-form-field appearance="outline" class="device-field">
+                    <mat-label>Inserire Device-Code</mat-label>
+                    <input matInput type="text" formControlName="devCode" #linkDescription (keydown)="term$.next($event)"
+                    (keydown.enter)="addAlias()" spellcheck="false">
+                    <!-- <input matInput type="text" formControlName="devCode" #linkDescription> -->
+                    <mat-error *ngIf="listForm.get('devCode').hasError('invalidCode')">
+                        Errore: Device-Code non valido.
+                        <!-- ({{jobForm.get('messageCore.link')?.getError('maxlength').requiredLength}} caratteri) -->
+                    </mat-error>
+                    <mat-hint *ngIf="this.deviceInsertedYet">
+                        Device code gia presente.
+                        <!-- ({{jobForm.get('messageCore.link')?.getError('maxlength').requiredLength}} caratteri) -->
+                    </mat-hint>
+                </mat-form-field>
+
+                <div id="csv-area">
+                    <small class="form-text text-muted">Device nella lista: {{devices.length}}, cliccare per rimuovere</small>
+                    <span *ngFor="let device of devices">
+                        <span class="device-span" (click)="deleteDevice(device)" matTooltip="Rimuovi" [matTooltipShowDelay]="400">{{device}}</span>, 
+                    </span>
+                    <span *ngIf="this.emptyListFlag && this.devices.length == 0" id="lista-vuota-error-span">Errore: Una lista deve avere associato almeno un device.</span>
+                </div>
+
+                <!-- <button type="submit" [disabled]="!listForm.valid">Invia</button> -->
+                <button mat-flat-button type="submit" [disabled]="!listForm.valid" id="whereapp-submit-button"
+                    color="primary">Salva modifiche</button>
+            </div>
+
+            
+
+            <!-- <p>
+              Form Status: {{ jobForm.status }}
+          </p> -->
+
+        </form>
+        <div class="loading" *ngIf="sub === true">
+        </div>
+
+    </div>
+
+    <!-- <mat-spinner class="spinner" *ngIf="sub === true"></mat-spinner> -->
+
+</div>

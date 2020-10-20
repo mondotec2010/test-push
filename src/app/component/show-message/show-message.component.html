@@ -1,0 +1,320 @@
+<!-- <div class="toolbar-whereapp">
+  <mat-card id="mat-card">
+    <mat-card-header fxLayout="row" fxLayoutGap="0" class="mb-3 mt-1">
+      <div mat-card-avatar fxLayout="column" fxFlex="95px">
+        <img fxFlex="65px" style="margin-top: -2px;" src="../../../assets/App24PA assets/App24PA-logo-small.png" alt="">
+      </div>
+      <div fxLayout="column">
+        <mat-card-title fxFlexOffset="3px">App24PA</mat-card-title>
+        <mat-card-subtitle>{{'Multilang.loginSubtitle' | translate}}</mat-card-subtitle>
+      </div>
+    </mat-card-header>
+  </mat-card>
+
+  <div id="info-container">
+    <button [matMenuTriggerFor]="menu" id="menu-button">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon></button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <span></span>
+      <div id="menu-user-info">
+        <span class="menu-version-info-line"><small>Ver. 4.0</small></span>
+        <span class="menu-user-info-line" id="user-line"><small>Operatore:</small> {{ user }}</span>
+      </div>
+      <button mat-menu-item routerLink="/messages">Messaggi</button>
+      <button mat-menu-item routerLink="/distribution-list">Liste di distribuzione</button>
+      <button mat-menu-item routerLink="/senders">Mittenti certificati</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </div>
+</div> -->
+
+<app-menu></app-menu>
+
+<div class="searchbar-whereapp">
+  <div id="invia-messaggio-div">
+    <button id="invia-messaggio-button" (click)="newMessageDialog()">
+      <mat-icon aria-hidden="false" id="invia-messaggio-icon">add</mat-icon>
+      <span id="invia-messaggio-text">{{ 'Multilang.newMessage'| translate }}</span>
+    </button>
+  </div>
+
+  <div id="search-div">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+    <input spellcheck="false" type="text" #filter (click)="onClickSearchbar()"
+      (keyup)="applyFilter($event.target.value)" placeholder="Filtra per parole chiave">
+  </div>
+
+  <div id="pagination-div">
+    <mat-paginator [hidePageSize]="true" [pageSize]="50" [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+</div>
+
+<mat-progress-bar mode="indeterminate" style="position: absolute; top: 68px; z-index: 27;" [hidden]="!this.loading">
+</mat-progress-bar>
+
+<div id="empty-list" *ngIf="emptyList">
+  <span>{{ 'Multilang.emptyListMessage'| translate }}</span>
+</div>
+
+<div id="main-container">
+  <!-- Tabella messaggi -->
+  <mat-table [dataSource]="dataSource" matSort matSortActive="startDate" matSortDirection="desc" matSortStart="asc"
+    matSortDisableClear>
+    <!-- Stato validita messaggio -->
+    <ng-container matColumnDef="validity">
+      <mat-header-cell *matHeaderCellDef fxFlex="5%" class="mobile-medium">
+        <mat-icon>
+        </mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5%" class="mobile-medium">
+        <!-- Stato in corso di validita -->
+        <!-- <mat-icon *ngIf="element.validity === 2" style="color: green"
+          matTooltip="{{ 'Multilang.verification2'| translate }}">date_range
+        </mat-icon> -->
+        <!-- Stato in attesa -->
+        <!-- <mat-icon *ngIf="element.validity === 1" matTooltip="{{ 'Multilang.verification1'| translate }}">
+          date_range
+        </mat-icon> -->
+        <i *ngIf="element.validity === 1" matTooltip="{{ 'Multilang.verification1'| translate }}"
+          class="fa fa-clock-o fa-lg" id="pending-icon" aria-hidden="true"></i>
+        <!-- Stato attivo -->
+        <i *ngIf="element.validity === 2" matTooltip="{{ 'Multilang.verification2'| translate }}"
+          class="fa fa-arrow-right fa-lg" id="active-icon" aria-hidden="true"></i>
+        <!-- Stato terminato -->
+        <!-- <mat-icon *ngIf="element.validity === 3" style="color: red"
+          matTooltip="{{ 'Multilang.verification3'| translate }}">date_range
+        </mat-icon> -->
+        <i *ngIf="element.validity === 3" matTooltip="{{ 'Multilang.verification3'| translate }}"
+          class="fa fa-check fa-lg" id="expired-icon" aria-hidden="true"></i>
+        <!-- Stato soppresso -->
+        <!-- <mat-icon *ngIf="element.validity === 4" style="color: darkblue"
+          matTooltip="{{ 'Multilang.verification4'| translate }}">
+          date_range
+        </mat-icon> -->
+        <i *ngIf="element.validity === 4" matTooltip="{{ 'Multilang.verification4'| translate }}"
+          class="fa fa-times fa-lg" id="cancelled-icon" aria-hidden="true"></i>
+      </mat-cell>
+    </ng-container>
+    <!-- Sender Name -->
+    <ng-container matColumnDef="senderName">
+      <mat-header-cell *matHeaderCellDef fxFlex="30%" fxFlex.sm="25%" fxFlex.xs="30%" class="mobile-large"
+        mat-sort-header>
+        {{ 'Multilang.messageSender'| translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let sender" fxFlex="30%" fxFlex.sm="25%" fxFlex.xs="30%" class="mobile-large"
+        style="padding-right: 8px">
+        {{sender.senderName}} </mat-cell>
+    </ng-container>
+    <!-- Area -->
+    <ng-container matColumnDef="area">
+      <mat-header-cell *matHeaderCellDef fxFlex="20%" class="mobile-small" mat-sort-header> Area
+      </mat-header-cell>
+      <mat-cell *matCellDef="let areas" fxFlex="20%" class="mobile-small" style="margin-right: 8px">
+        <!-- <p>{{areas.area[0].area}}</p> --> DA IMPLEMENTARE
+      </mat-cell>
+    </ng-container>
+    <!-- Oggetto -->
+    <ng-container matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef fxFlex="38%" fxFlex.sm="30%" fxFlex.xs="35%" class="mobile-large"
+        mat-sort-header>
+        {{ 'Multilang.mesageSubject'| translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let message" fxFlex="38%" fxFlex.sm="30%" fxFlex.xs="35%" class="mobile-large">
+        <span style="cursor: pointer" matTooltipPosition="after" style="padding-right: 8px">{{message.subject}}</span>
+        <span *ngIf="message.capIt">{{message.capIt}}</span>
+      </mat-cell>
+    </ng-container>
+    <!-- Inizio  -->
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef fxFlex="12%" class="mobile-medium" mat-sort-header>
+        {{ 'Multilang.startDate'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="12%" class="mobile-medium" style="padding-right: 8px">
+        {{element.startDate | date:"short"}}
+      </mat-cell>
+    </ng-container>
+    <!-- Scadenza  -->
+    <ng-container matColumnDef="expirationDate">
+      <mat-header-cell *matHeaderCellDef fxFlex="12%" class="mobile-medium" mat-sort-header>
+        {{ 'Multilang.expirationDate'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="12%" class="mobile-medium" style="padding-right: 8px">
+        {{element.endDate | date:"short"}}
+      </mat-cell>
+    </ng-container>
+    <!-- Stato di messaggio -->
+    <ng-container matColumnDef="messageStatusId">
+      <mat-header-cell *matHeaderCellDef fxFlex="8%" fxFlex.sm="15%" fxFlex.xs="20%" class="mobile-large">
+        {{ 'Multilang.messageStatus'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="8%" fxFlex.sm="15%" fxFlex.xs="20%" class="mobile-large"
+        style="padding-right: 8px">
+        <span>{{ 'Multilang.messageStatus' + element.messageStatusId| translate }}</span>
+      </mat-cell>
+    </ng-container>
+    <!-- Numero messaggi inviati -->
+    <ng-container matColumnDef="messagesSent">
+      <mat-header-cell *matHeaderCellDef fxFlex="7%" class="mobile-medium">
+        {{ 'Multilang.messagesSent'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="7%" class="mobile-medium" style="padding-right: 8px;">
+        {{element.messagesSent}}
+      </mat-cell>
+    </ng-container>
+    <!-- Numero messaggi letti -->
+    <ng-container matColumnDef="messagesRead">
+      <mat-header-cell *matHeaderCellDef fxFlex="10%" class="mobile-medium">
+        {{ 'Multilang.messagesRead'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10%" class="mobile-medium">{{element.messagesRead}} </mat-cell>
+    </ng-container>
+    <!-- Dettagli -->
+    <ng-container matColumnDef="Dettagli">
+      <mat-header-cell *matHeaderCellDef fxFlex="5%" fxFlex.sm="10%" fxFlex.xs="15%" class="mobile-large">
+        {{ 'Multilang.messagesDetail'| translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5%" fxFlex.sm="10%" fxFlex.xs="15%" class="mobile-large">
+        <button type="button" mat-button color="primary" matTooltip="{{ 'Multilang.details'| translate }}"
+          style="padding: 0; min-width: 36px;" [routerLink]="['/message-details', element.id]">
+          <mat-icon>
+            visibility
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Termina messaggio -->
+    <!-- <ng-container matColumnDef="Termina">
+      <mat-header-cell *matHeaderCellDef fxFlex="100%" fxFlex.sm="10%" fxFlex.xs="15%" class="mobile-large">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let message" fxFlex="100%" fxFlex.sm="10%" fxFlex.xs="15%" class="mobile-large">
+        <button  type="button" mat-button color="warn" [disabled]="message.messageStatusId == 5 || message.validity === 3"
+          matTooltip="{{'Multilang.terminateButton' | translate}}" style="padding: 0; min-width: 36px;"
+          (click)="terminate(message)">
+          <mat-icon>
+            remove_circle
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container> -->
+    <!-- Termina messaggio -->
+    <ng-container matColumnDef="details">
+      <mat-header-cell *matHeaderCellDef fxFlex="100%" fxFlex.sm="10%" fxFlex.xs="15%" class="mobile-large">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let message; let i = index" fxFlex="100%" fxFlex.sm="10%" fxFlex.xs="15%"
+        class="mobile-large">
+        <div id="details-container">
+          <div id="preview-container">
+
+            <div id="creationtime-container">
+              <!-- {{ message.element.subject }}           -->
+              {{ 'Multilang.creationDate'| translate }} {{ message.element.createdDate | date:"short"}}
+            </div>
+
+            <div id="subject-container">
+              <div id="language-menu">
+                <!--      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" matTooltip="Seleziona la lingua in cui vuoi visualizzare il messaggio">
+                  <button mat-menu-item *ngFor="let item of message.element.originalMessages"
+                    (click)="onLanguageMenuItem(item,message.element)">
+                    <mat-icon>language</mat-icon>
+                    <span>{{item.language}}</span>
+                  </button>
+                </mat-menu> -->
+                <!-- <div style="margin-top:-9px;margin-left:255px;font-size: small;">Seleziona lingua messaggio</div> -->
+                <mat-select class="mat-select-c" [(ngModel)]="matSelectDefaultLanguage">
+                  <!--  <mat-select-trigger> Seleziona lingua..</mat-select-trigger> -->
+                  <mat-option *ngFor="let item of message.element.originalMessages"
+                    (click)="onLanguageMenuItem(item,message.element)" [value]="item.language">
+                    <span class="flag-icon flag-icon-{{item.language.toLowerCase()}}"></span>
+                    {{item.language}}
+                  </mat-option>
+                </mat-select>
+              </div>
+              <i *ngIf="message.element.validity === 1" matTooltip="{{ 'Multilang.verification1'| translate }}"
+                class="fa fa-clock-o fa-lg mr-2" id="pending-icon" aria-hidden="true"></i>
+              <!-- Stato attivo -->
+              <i *ngIf="message.element.validity === 2" matTooltip="{{ 'Multilang.verification2'| translate }}"
+                class="fa fa-arrow-right fa-lg mr-2" id="active-icon" aria-hidden="true"></i>
+              <!-- Stato terminato -->
+              <i *ngIf="message.element.validity === 3" matTooltip="{{ 'Multilang.verification3'| translate }}"
+                class="fa fa-check fa-lg mr-2" id="expired-icon" aria-hidden="true"></i>
+              <!-- Stato anullato -->
+              <i *ngIf="message.element.validity === 4" matTooltip="{{ 'Multilang.verification4'| translate }}"
+                class="fa fa-times fa-lg mr-2" id="cancelled-icon" aria-hidden="true"></i>
+              {{ message.element.subject }}
+            </div>
+            <div id="body-container">
+              {{ message.element.body }}
+            </div>
+            <div id="url-container">
+              <a href="{{ message.element.url }}" target="_blank">{{ message.element.url | limitTo : '50' }}</a>
+            </div>
+            <div style="margin-top:3px" id="category-container">
+              {{ message.element.categoryName }}
+            </div>
+            <div style="margin-top:3px" id="sender-container">
+              {{ message.element.senderName }}
+            </div>
+
+          </div>
+          <div id="core-details-container">
+
+            <div *ngIf="!(message.element.area.length == 0)" id="map-container"
+              [ngClass]="!mapDisplayed ? 'map-collapsed' : 'map-expanded'">
+              <app-detail-map-v2 *ngIf="i == mapToLoadIndex" [aree]="message.element.area"></app-detail-map-v2>
+            </div>
+
+            <div id="media-container">
+              <span id="date-label">Pannello di controllo</span>
+              <div class="control-panel">
+                <a mat-stroked-button class="control-panel-item button-link" href="{{message.element.multimediaLink}}"
+                  target="_blank" (click)="mostraAllegato(message.element.multimediaName)"
+                  [disabled]="!(message.element.multimediaLink)">{{ 'Multilang.viewMultimedia'| translate }}</a>
+                <!--      <button mat-stroked-button class="control-panel-item" (click)="extendMessage(message.element)"
+                  [disabled]="!(message.element.validity == 1 || message.element.validity == 2)">
+                  {{ 'Multilang.messageExtension'| translate }}</button> -->
+                <!-- <button mat-stroked-button class="control-panel-item" (click)="extendMessage(message.element)"
+                  disabled>Proroga messaggio</button> -->
+                <!-- <button #terminateButton mat-stroked-button class="control-panel-item" color="warn"
+                  (click)="terminateMessage(message.element.id)"
+                  [disabled]="message.element.validity === 4 || message.element.validity === 3">{{ 'Multilang.terminateButton'| translate }}</button> -->
+              </div>
+            </div>
+
+            <div id="times-container">
+              <span id="date-label">{{ 'Multilang.timeTitle'| translate }}</span>
+              <div id="startDate-container">
+                <div class="date-field"> da {{ message.element.startDate | date:"EEEE dd/LL/y  HH:mm" }} </div>
+              </div>
+              <div id="endDate-container">
+                <div class="date-field"> a {{ message.element.endDate | date:"EEEE dd/LL/y  HH:mm" }} </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="text-center" (click)="closeRow()">
+            <button mat-stroked-button id="actions-container" color="primary">
+              <i class="fa fa-angle-double-up fa-2x" id="close-icon" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <!-- Impostazione di righe e colonne -->
+    <mat-header-row *matHeaderRowDef=" displayedColumns; sticky: true" style="height: 64px">
+    </mat-header-row>
+    <!-- <mat-row (click)="test()" *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" class="element-row"
+      [class.expanded]="expandedElement == row" (click)="expandedElement = row; scroll(i); setMapToLoadIndex(i)">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['details']; when: isExpansionDetailRow; let i = index" class="detail-row"
+      [class.expanded]="expandedElement == row"
+      [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden">
+      <!-- (click)="scroll(i-1);">  -->
+    </mat-row>
+  </mat-table>
+</div>
+
+<div class="loading" *ngIf="sub === true">
+</div>

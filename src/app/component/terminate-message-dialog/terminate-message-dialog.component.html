@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Terminare messaggio?</h2>
+<hr>
+<mat-dialog-content><strong>L'operazione non è reversibile.</strong> <br>Tutte le notifiche già inviate rimarranno comunque nel feed dei dispositivi.</mat-dialog-content>
+<hr>
+<mat-dialog-actions id="action-div">
+    <button mat-stroked-button (click)="closeCancelling()">Annulla</button>
+    <button mat-stroked-button color="warn" (click)="closeTerminating()">Termina</button>
+</mat-dialog-actions>

@@ -1,0 +1,39 @@
+<div class="toolbar-whereapp">
+  <mat-card id="mat-card">
+    <mat-card-header fxLayout="row" fxLayoutGap="0" class="mb-3 mt-1">
+      <div mat-card-avatar fxLayout="column" fxFlex="145px">
+        <img fxFlex="45px" style="margin-top: 7px;"
+          src="../../../assets/itAlert assets/logo-italert-orizzontale(nuovo).png" alt="">
+        <!-- <img fxFlex="50px" src="../../../assets/icons/logohd.svg" alt=""> CUSTOMIZATION-SOLE24ORE -->
+      </div>
+      <!-- <div fxLayout="column">
+          <mat-card-title fxFlexOffset="3px">App24PA</mat-card-title>
+          <mat-card-subtitle>{{'Multilang.loginSubtitle' | translate}}</mat-card-subtitle>
+        </div> -->
+    </mat-card-header>
+  </mat-card>
+
+  <!-- <div id="contracts-container">
+      <span>
+        <mat-icon aria-hidden="false" aria-label="report_problem icon">report_problem</mat-icon>
+        Attenzione. Ci sono dei contratti scaduti. Alcuni mittenti potrebbero non essere disponibili.</span>
+    </div> -->
+
+  <div id="info-container">
+    <button [matMenuTriggerFor]="menu" id="menu-button">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <div mat-menu-item disabled id="menu-user-info">
+        <span class="menu-version-info-line"><small>Ver. 4.0</small></span>
+        <span class="menu-user-info-line" id="user-line"><small>utente:</small> {{ user }}</span>
+      </div>
+      <!-- <button mat-menu-item>item1</button>
+        <button mat-menu-item>item2</button> -->
+      <button mat-menu-item routerLink="/messages">Messaggi</button>
+      <!-- <button mat-menu-item routerLink="/distribution-list">Liste di distribuzione</button> -->
+      <!-- <button mat-menu-item routerLink="/senders">Mittenti certificati</button> -->
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </div>
+</div>

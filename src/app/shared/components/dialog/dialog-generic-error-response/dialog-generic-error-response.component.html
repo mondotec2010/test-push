@@ -1,0 +1,25 @@
+<div class="divMessage">
+    <h1 mat-dialog-title class="h1Send"
+    >{{data.message}}</h1>
+    </div>
+    <div mat-dialog-content >
+    
+      <ul>
+      
+        <li>
+            <p><b>Codice errore:</b><br>
+          <span *ngIf="data.errorCode">&emsp;{{data.errorCode}}</span> 
+            </p>
+        </li>
+      
+    </ul>
+      
+    </div>
+    
+    <div mat-dialog-actions>
+    
+    <mat-dialog-actions align="end">
+       <button mat-raised-button (click)="close()"  color="primary" >Ok</button>  
+    </mat-dialog-actions>
+
+    </div>

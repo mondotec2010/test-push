@@ -1,0 +1,78 @@
+{
+      "sender":  "PCM-DPC",
+      "sender-signature":  "italertusr01",
+      "msgType": ["Alert"],
+      "status": [
+                             {"label":"Reale"		, "value":"Actual"},
+                             {"label":"Esercitazione", "value":"Exercise"},
+                             {"label":"Test"			, "value":"Test"}
+                       ],
+      "scope": ["Public"],
+      "code": ["profile:CAP-IT:1.0"],
+      "category":[
+                             {"label":"ProtezioneCivile",	"value":"DPC",			"idsender":1 },
+                             {"label":"Met",					"value":"Met",			"idsender":2 },
+                             {"label":"Incendi",				"value":"Fire",			"idsender":3 },
+                             {"label":"Ambiente",			"value":"Env",			"idsender":4 },
+                             {"label":"Salute",				"value":"Health",		"idsender":5 },
+                             {"label":"Geo",					"value":"Geo",			"idsender":6 },
+                             {"label":"Emergenza",			"value":"Safety",		"idsender":7 },
+                             {"label":"Sicurezza",			"value":"Security",		"idsender":8 },
+                             {"label":"Soccorso",			"value":"Rescue",		"idsender":9 },
+                             {"label":"Trasporto",			"value":"Transport",	"idsender":10},
+                             {"label":"Infra",				"value":"Infra",		"idsender":11},
+                             {"label":"CBRNE",				"value":"CBRNE",		"idsender":12},
+                             {"label":"Altro",				"value":"Other",		"idsender":13}
+                       ],
+     "urgency": [
+                             {"label":"Immediata"	, "value":"Immediate"},
+                             {"label":"Prevista"		, "value":"Expected"},
+                             {"label":"Futura"		, "value":"Future"},
+                             {"label":"Passata"		, "value":"Past"},
+                             {"label":"Sconosciuta"	, "value":"Unknown"}
+                       ],
+     "severity": [
+                             {"label":"Estrema"			, "value":"Extreme"},
+                             {"label":"Significativa"	, "value":"Severe"},
+                             {"label":"Moderata"			, "value":"Moderate"},
+                             {"label":"Minima"			, "value":"Minor"},
+                             {"label":"Sconosciuta"		, "value":"Unknown"}
+                       ],
+     "certainty": [
+                             {"label":"Osservato"	, "value":"Observed"},
+                             {"label":"Probabile"	, "value":"Likely"},
+                             {"label":"Possibile"	, "value":"Possible"},
+                             {"label":"Improbabile"	, "value":"Unlikely"},
+                             {"label":"Sconosciuta"	, "value":"Unknown"}
+                       ],	
+     "responseType": [
+                         {"label":"" 					, "value":""},
+                                   {"label":"Riparo" 				, "value":"Shelter"},
+                                   {"label":"Evacuare" 			, "value":"Evacuate"},
+                                   {"label":"Preparare" 			, "value":"Prepare"},
+                                   {"label":"Eseguire" 			, "value":"Execute"},
+                                   {"label":"Evitare" 	 			, "value":"Avoid"},
+                                   {"label":"Monitorare" 			, "value":"Monitor"},
+                                   {"label":"Valutare" 			, "value":"Assess"},
+                                   {"label":"Cessato allarme"	 	, "value":"AllClear"},
+                                   {"label":"Nessuno"	 			, "value":"None"}
+                       ],
+     "instruction":
+                       [
+                           {"label":"",						"value":""},
+                             {"label":"IoNonRischio Meteo",		"value":"0001"},
+                             {"label":"IoNonRischio Incendi",	"value":"0002"},
+                             {"label":"IoNonRischio Tsunami",	"value":"0003"},
+                             {"label":"IoNonRischio Vulcani",	"value":"0004"},
+                             {"label":"IoNonRischio Terremoti",	"value":"0005"}
+                       ],
+     "language": [
+                             {"label":"Italiano"		, "value":"it-IT"},
+                             {"label":"English"		, "value":"en-GB"},
+                             {"label":"Français"		, "value":"fr-FR"},
+                             {"label":"Español"		, "value":"es-ES"},
+                             {"label":"Deutsche"		, "value":"de-DE"}
+                       ],	
+     "mime-type": ["image/jpeg", "image/png", "image/pjpeg", "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/x-mpeg-3", "video/mp4", "video/quicktime", "application/pdf"],
+     "param-date-delay-min": 60
+     }

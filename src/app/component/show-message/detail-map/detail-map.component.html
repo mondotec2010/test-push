@@ -1,0 +1,16 @@
+<agm-map 
+  [clickableIcons]="false"
+  [streetViewControl]="false" 
+  [gestureHandling]="'cooperative'"
+  [zoomControl]="true"
+  [scrollwheel]="false"
+  drawingControl = "true"
+  [disableDoubleClickZoom]="true"
+  (mapReady)="onMapReady($event)"   
+  style="height: 400px"
+  id="coords"
+  *ngIf="center">
+  <!-- <div *ngFor="let singleShape of shapes">
+    <agm-polygon  [(paths)]="singleShape"></agm-polygon>
+  </div>   -->
+</agm-map>

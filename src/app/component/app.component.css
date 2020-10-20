@@ -1,0 +1,19 @@
+/* @media(max-width: 989px) {
+    #toolbar {
+        display: none !important;
+    }
+}
+
+@media(min-width: 990px) {
+    #toolbarMobile {
+        display: none !important;
+    }
+} */
+
+#toolbar {
+    display: none !important;
+}
+
+#toolbarMobile {
+    display: none !important;
+}

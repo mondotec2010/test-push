@@ -1,0 +1,524 @@
+<app-menu></app-menu>
+<div id="new-message-window" style="background-color: rgba(211, 211, 211, 0.527);" fxLayout="column" >
+
+  <!-- <mat-progress-bar *ngIf="fieldStillLoading > 0" mode="buffer"></mat-progress-bar> -->
+
+  <!-- <div id="new-message-header" class="mat-typography">
+    <h3 id="new-message-form-title"></h3>
+    <mat-icon aria-hidden="false" id="exit-form-control" (click)="closeDialog()">close</mat-icon>
+  </div> -->
+  <div fxLayout="row" fxFlex="7" fxLayoutAlign="start center">
+    <span fxFlexOffset="3%" style="font-weight: 900; font-family: roboto; color: #212060; font-size: 24px;">
+      Nuovo messaggio CAP-IT
+    </span>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex>
+    <div fxLayout="column"  fxFlex="95">
+        <mat-horizontal-stepper #stepper [linear]="true">
+        <!-- <mat-horizontal-stepper #stepper> -->
+          <mat-step [stepControl]="firstStepFormGroup" fxLayout="row" fxFlexOffset="3%">
+            <form [formGroup]="firstStepFormGroup" fxLayout="column" fxFlex>
+              <ng-template matStepLabel>Dettagli</ng-template>
+              <div fxFlexOffset="2%" fxLayout="row" fxLayoutGap="3%">
+                <div fxLayout="column"  fxFlex="30%"></div>
+                <div formGroupName="times" name="times" fxLayout="column"  fxFlex="30%">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                    <mat-form-field fxFlex="80%">
+                      <mat-label>Data/Ora Creazione:</mat-label>
+                      <input matInput formControlName="creation" [matDatepicker]="picker2" [disabled]="true">
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                    <ngx-timepicker-field  [toggleIcon]="icon" style="height: fit-content; margin-bottom: 6px;" [format]="24" [defaultTime]="'00:00'"
+                      formControlName="creationTime" [disabled]="true"></ngx-timepicker-field>
+                      <ng-template #icon>
+                        <img class="iconTimes" src="assets\icons\clock_color_RGB_22_22_22_enlarge.png">
+                      </ng-template>
+                  </div>
+                </div>
+                <div formGroupName="times" name="times" fxLayout="column"  fxFlex="30%">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                    <mat-form-field fxFlex="80%">
+                      <mat-label id="sentDate">Data/Ora Invio:</mat-label>
+                      <input matInput formControlName="sent" [matDatepicker]="picker1" 
+                      (ngModelChange)="dateSentChange($event)" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <ngx-timepicker-field [toggleIcon]="icon" style="height: fit-content; margin-bottom: 6px;" [format]="24"  [defaultTime]="firstStepFormGroup.get('times').value.creationTime"
+                    (ngModelChange)="timeSentChange($event)"
+                      formControlName="sentTime" required></ngx-timepicker-field>
+                      <ng-template #icon>
+                        <img class="iconTimes" src="assets\icons\clock_color_RGB_22_22_22_enlarge.png">
+                      </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div fxFlexOffset="30px" fxLayout="row" >
+                <mat-radio-group class="example-section" fxLayoutGap="40px" formControlName="messageStatus" >
+                    <mat-radio-button #msgStatus class="checkbox-margin" *ngFor="let status of messageStatus" [value]="status"  [checked]="status.value === 'Actual'" [disabled]="status.value === 'Test'">{{status.label}}</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div fxFlexOffset="2%"  fxLayout="row" fxLayoutGap="3%">
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field name="category" ngDefaultControl >
+                    <mat-label>Categoria</mat-label>
+                    <mat-select formControlName="messageCategory" required >
+                      <mat-option *ngFor="let messageCategory of messageCategories" [value]="messageCategory" >
+                        {{messageCategory.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field name="event" ngDefaultControl >
+                    <mat-label>Sottocategoria</mat-label>
+                    <mat-select formControlName="messageEvent" [disabled]="true">
+                      <mat-option *ngFor="let event of messageEvents" [value]="event">
+                        {{event.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxFlexOffset="2%" fxLayout="row" fxLayoutGap="3%">
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field>
+                    <mat-label>Urgenza</mat-label>
+                    <mat-select formControlName="messageUrgency" required>
+                      <mat-option *ngFor="let urgency of messageUrgencies" [value]="urgency">
+                        {{urgency.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field name="category" ngDefaultControl >
+                    <mat-label>Gravità:</mat-label>
+                    <mat-select formControlName="messageSeverity" required>
+                      <mat-option *ngFor="let severity of messageSeverities" [value]="severity">
+                        {{severity.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field>
+                    <mat-label>Certezza</mat-label>
+                    <mat-select formControlName="messageCertainty" required>
+                      <mat-option *ngFor="let certainty of messageCertainties" [value]="certainty">
+                        {{certainty.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxFlexOffset="2%" fxLayout="row" fxLayoutGap="3%">
+                <div fxLayout="column" fxFlex="30%">
+                  <mat-form-field>
+                    <mat-label>Tipo di reazione</mat-label>
+                    <mat-select formControlName="messageResponse">
+                      <mat-option *ngFor="let responseType of messageResponseTypes" [value]="responseType">
+                        {{responseType.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div  fxFlexOffset="2%" fxLayout="row" fxLayoutGap="3%">
+                <div formGroupName="times" name="times" fxFlex="30%">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                    <mat-form-field fxFlex="80%">
+                      <mat-label>Data/Ora effettiva dell'informazione:</mat-label>
+                      <input matInput formControlName="effective" [matDatepicker]="picker3">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                    <ngx-timepicker-field [toggleIcon]="icon" style="height: fit-content; margin-bottom: 6px;"  [format]="24" [controlOnly]="true"
+                      formControlName="effectiveTime"></ngx-timepicker-field>
+                      <ng-template #icon>
+                        <img class="iconTimes" src="assets\icons\clock_color_RGB_22_22_22_enlarge.png">
+                      </ng-template>
+                  </div>
+                </div>
+                <div formGroupName="times" name="times" fxFlex="30%">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                    <mat-form-field fxFlex="80%">
+                      <mat-label>Data/Ora Stimata inizio evento:</mat-label>
+                      <input matInput formControlName="onset" [matDatepicker]="picker4" >
+                      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+                    <ngx-timepicker-field [toggleIcon]="icon" style="height: fit-content; margin-bottom: 6px;"  [format]="24" [controlOnly]="true"
+                      formControlName="onsetTime"></ngx-timepicker-field>
+                      <ng-template #icon>
+                        <img class="iconTimes" src="assets\icons\clock_color_RGB_22_22_22_enlarge.png">
+                      </ng-template>
+                  </div>
+                </div>
+                <div formGroupName="times" name="times" fxFlex="30%">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                    <mat-form-field fxFlex="80%">
+                      <mat-label id="endDateLabel">Data/Ora stimata fine evento:</mat-label>
+                      <input matInput formControlName="expires" [matDatepicker]="picker5" (ngModelChange)="dateEndChange($event)" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                      <mat-datepicker #picker5></mat-datepicker>
+                    </mat-form-field>
+                    <ngx-timepicker-field [toggleIcon]="icon" style="height: fit-content; margin-bottom: 6px;"  [format]="24" [defaultTime]="'23:59'"
+                      formControlName="expiresTime" (ngModelChange)="timeEndChange($event)" required></ngx-timepicker-field>
+                      <ng-template #icon>
+                        <img class="iconTimes" src="assets\icons\clock_color_RGB_22_22_22_enlarge.png">
+                      </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="firstStepFormGroup.get('times').errors && (firstStepFormGroup.get('times').dirty || firstStepFormGroup.get('times').touched)"
+                class="alert alert-danger">
+                <div *ngIf="firstStepFormGroup.get('times').errors.invalidStartDate">
+                  Errore: Data e ora di inizio validità devono essere posteriori alla data e ora attuali.
+                </div>
+                <div *ngIf="firstStepFormGroup.get('times').errors.invalidEndDate">
+                  Errore: Il periodo di validità deve essere di almeno un'ora.
+                </div>
+                <div *ngIf="firstStepFormGroup.get('times').errors.forbiddenName">
+                  Name cannot be Bob.
+                </div>
+              </div>
+              <div fxLayout="row" fxLayoutGap="80%" fxFlexOffset="3%">
+                <button type="button" color="primary" mat-flat-button fxFlex="150" (click)="back()">Annulla</button>
+                <button type="button" #forwardButton1 id="forwardButton1" [disabled]="!firstStepFormGroup.valid" color="primary" mat-flat-button fxFlex="150" matStepperNext>Avanti</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- ################## First step end ################## -->
+
+          <mat-step [stepControl]="secondStepFormGroup" fxLayout="row" fxFlexOffset="3%">
+            <form [formGroup]="secondStepFormGroup" fxLayout="column">
+              <ng-template matStepLabel>Messaggio</ng-template>
+              <div fxFlex="row">
+                <mat-form-field fxFlex>
+                  <mat-label>Messaggio predefinito</mat-label>
+                  <mat-select disabled="true">
+                    <mat-select-trigger></mat-select-trigger>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="row">
+                <mat-form-field fxFlex>
+                  <mat-label>Istruzioni predefinite</mat-label>
+                  <mat-select formControlName="instruction">
+                    <mat-option *ngFor="let instruction of messageIntructions" [value]="instruction">
+                      {{instruction.label}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <mat-accordion formGroupName="originalMessages" fxFlexOffset="4%">
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header >
+                    <mat-panel-title fxLayoutGap="10px">
+                      <span class="flag-icon flag-icon-it"></span>
+                      <span class="expansion-panel-title"> Italiano</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label>Evento:</mat-label>
+                    <input matInput type="text" formControlName="eventIT" maxlength="100" #eventIT required>
+                    <small class="form-text text-muted"><code>{{eventIT.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label>Titolo:</mat-label>
+                    <input matInput type="text" formControlName="subjectIT" maxlength="100" #subjectDescriptionIT required>
+                    <small class="form-text text-muted"><code>{{subjectDescriptionIT.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="body-field">
+                    <mat-label>Descrizione evento:</mat-label>
+                    <textarea matInput formControlName="bodyIT" maxlength="200" #bodyDescriptionIT cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1.5" cdkAutosizeMaxRows="50" required></textarea>
+                    <small class="form-text text-muted"><code>{{bodyDescriptionIT.value.length}}</code> di
+                      <code>{{200}}</code>
+                      caratteri</small>
+                    <small *ngIf="this.selectedSender" class="form-text text-muted" id="lang-hint">lingua di inserimento
+                      messaggio
+                      <!--  //<span [ngClass]="this.getFlagClass()"></span> -->
+                      <span class="flag-icon flag-icon-it"></span>
+                    </small>
+                  </mat-form-field>
+                </mat-expansion-panel>
+                <mat-divider></mat-divider>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title fxLayoutGap="10px">
+                      <span class="flag-icon flag-icon-en"></span>
+                      <span class="expansion-panel-title">Inglese</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="eventGBLabel">Event:</mat-label>
+                    <input matInput (change)="checkOnLanguage('GB')" type="text" formControlName="eventGB" maxlength="100" #eventEN>
+                    <small class="form-text text-muted"><code>{{eventEN.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="subjectGBLabel">Title:</mat-label>
+                    <input matInput (change)="checkOnLanguage('GB')" type="text" formControlName="subjectGB" maxlength="100" #subjectDescriptionEN>
+                    <small class="form-text text-muted"><code>{{subjectDescriptionEN.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="body-field">
+                    <mat-label id="bodyGBLabel">Event description:</mat-label>
+                    <textarea  (change)="checkOnLanguage('GB')" matInput formControlName="bodyGB" maxlength="200" #bodyDescriptionEN cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1.5" cdkAutosizeMaxRows="50"></textarea>
+                    <small class="form-text text-muted"><code>{{bodyDescriptionEN.value.length}}</code> di
+                      <code>{{200}}</code>
+                      caratteri</small>
+                    <small *ngIf="this.selectedSender" class="form-text text-muted" id="lang-hint">lingua di inserimento
+                      messaggio
+                      <!--  //<span [ngClass]="this.getFlagClass()"></span> -->
+                      <span class="flag-icon flag-icon-en"></span>
+                    </small>
+                  </mat-form-field>
+                </mat-expansion-panel>
+                <mat-divider></mat-divider>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title fxLayoutGap="10px">
+                      <span class="flag-icon flag-icon-fr"></span>
+                      <span class="expansion-panel-title">Francese</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="eventFRLabel">événement:</mat-label>
+                    <input matInput (change)="checkOnLanguage('FR')" type="text" formControlName="eventFR" maxlength="100" #eventFR>
+                    <small class="form-text text-muted"><code>{{eventFR.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="subjectFRLabel">Titre:</mat-label>
+                    <input matInput (change)="checkOnLanguage('FR')" type="text" formControlName="subjectFR" maxlength="100" #subjectDescriptionFR>
+                    <small class="form-text text-muted"><code>{{subjectDescriptionFR.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="body-field">
+                    <mat-label id="bodyFRLabel">Description de l'évenement:</mat-label>
+                    <textarea matInput (change)="checkOnLanguage('FR')" formControlName="bodyFR" maxlength="200" #bodyDescriptionFR cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1.5" cdkAutosizeMaxRows="50"></textarea>
+                    <small class="form-text text-muted"><code>{{bodyDescriptionFR.value.length}}</code> di
+                      <code>{{200}}</code>
+                      caratteri</small>
+                    <small *ngIf="this.selectedSender" class="form-text text-muted" id="lang-hint">lingua di inserimento
+                      messaggio
+                      <!--  //<span [ngClass]="this.getFlagClass()"></span> -->
+                      <span class="flag-icon flag-icon-fr"></span>
+                    </small>
+                  </mat-form-field>
+                </mat-expansion-panel>
+                <mat-divider></mat-divider>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title fxLayoutGap="10px">
+                      <span class="flag-icon flag-icon-es"></span>
+                      <span class="expansion-panel-title">Spagnolo</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="eventESLabel">Evento:</mat-label>
+                    <input matInput (change)="checkOnLanguage('ES')" type="text" formControlName="eventES" maxlength="100" #eventES>
+                    <small class="form-text text-muted"><code>{{eventES.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="subjectESLabel">Tìtulo:</mat-label>
+                    <input matInput (change)="checkOnLanguage('ES')" type="text" formControlName="subjectES" maxlength="100" #subjectDescriptionES>
+                    <small class="form-text text-muted"><code>{{subjectDescriptionES.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="body-field">
+                    <mat-label id="bodyESLabel">Descripción del evento:</mat-label>
+                    <textarea matInput (change)="checkOnLanguage('ES')" formControlName="bodyES" maxlength="200" #bodyDescriptionES cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1.5" cdkAutosizeMaxRows="50"></textarea>
+                    <small class="form-text text-muted"><code>{{bodyDescriptionES.value.length}}</code> di
+                      <code>{{200}}</code>
+                      caratteri</small>
+                    <small *ngIf="this.selectedSender" class="form-text text-muted" id="lang-hint">lingua di inserimento
+                      messaggio
+                      <!--  //<span [ngClass]="this.getFlagClass()"></span> -->
+                      <span class="flag-icon flag-icon-es"></span>
+                    </small>
+                  </mat-form-field>
+                </mat-expansion-panel>
+                <mat-divider></mat-divider>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title fxLayoutGap="10px">
+                      <span class="flag-icon flag-icon-de"></span>
+                      <span class="expansion-panel-title">Tedesco</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="eventDELabel">Veranstaltung:</mat-label>
+                    <input matInput (change)="checkOnLanguage('DE')" type="text" formControlName="eventDE" maxlength="100" #eventDE>
+                    <small class="form-text text-muted"><code>{{eventDE.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="subject-field">
+                    <mat-label id="subjectDELabel">Titel:</mat-label>
+                    <input matInput (change)="checkOnLanguage('DE')" type="text" formControlName="subjectDE" maxlength="100" #subjectDescriptionDE>
+                    <small class="form-text text-muted"><code>{{subjectDescriptionDE.value.length}}</code> di
+                      <code>{{100}}</code>
+                      caratteri</small>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="body-field">
+                    <mat-label id="bodyDELabel">Eventbeschreibung:</mat-label>
+                    <textarea matInput (change)="checkOnLanguage('DE')" formControlName="bodyDE" maxlength="200" #bodyDescriptionDE cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1.5" cdkAutosizeMaxRows="50"></textarea>
+                    <small class="form-text text-muted"><code>{{bodyDescriptionDE.value.length}}</code> di
+                      <code>{{200}}</code>
+                      caratteri</small>
+                    <small *ngIf="this.selectedSender" class="form-text text-muted" id="lang-hint">lingua di inserimento
+                      messaggio
+                      <!--  //<span [ngClass]="this.getFlagClass()"></span> -->
+                      <span class="flag-icon flag-icon-de"></span>
+                    </small>
+                  </mat-form-field>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div fxLayout="row" fxLayoutGap="74%" fxFlexOffset="3%">
+                <div fxLayoutGap="10px" fxFlex="50%">
+                  <button type="button"  color="primary" mat-flat-button fxFlex="150" matStepperPrevious>Indietro</button>
+                  <button type="button" color="primary" mat-flat-button fxFlex="150" (click)="back()">Annulla</button>
+                </div>
+                <button type="button" #forwardButton2 [disabled]="!secondStepFormGroup.valid" color="primary" mat-flat-button fxFlex="150" matStepperNext>Avanti</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- #################### Second step end ###################-->
+          <mat-step [stepControl]="thirdStepFormGroup">
+            <ng-template matStepLabel>Localizzazione</ng-template>
+            <div fxLayout="column" >
+              <app-areas-factory [formGroup]="thirdStepFormGroup" [category]="categorySelected" (onBack)="back()" fxLayout="column"></app-areas-factory>
+              <div fxLayout="row" fxLayoutGap="74%" fxFlexOffset="3%">
+                <div fxLayoutGap="10px" fxFlex="50%">
+                  <button type="button"  color="primary" mat-flat-button fxFlex="150" matStepperPrevious>Indietro</button>
+                  <button type="button" color="primary" mat-flat-button fxFlex="150" (click)="back()">Annulla</button>
+                </div>
+                <button type="button" [disabled]="!thirdStepFormGroup.valid" color="primary" mat-flat-button fxFlex="150" matStepperNext>Avanti</button>
+              </div>
+            </div>
+          </mat-step>
+          <!-- #################### Third step end ###################-->
+          <mat-step [stepControl]="fourthStepFormGroup">
+            <ng-template matStepLabel>Altre Informazioni</ng-template>
+            <div fxLayout="row" fxLayoutAlign="center"  fxFlex>
+              <form [formGroup]="fourthStepFormGroup" fxLayout="column">
+                <div fxLayout="column" fxFlex="40">
+                  <h3 fxLayout="row"  fxFlexOffset="3%" style="font-weight: 700; font-family: roboto; color: #000000;">Parametri Aggiuntivi</h3>
+                  <p fxLayout="row">Ulteriori parametri tecnici vengono aggiunti automaticamente alla finalizzazione del messaggio in base alla tipologie di sistemi utilizzati</p>
+                </div>
+                <div fxLayout="column" fxFlex="60">
+                  <h3 fxLayout="row"  fxFlexOffset="3%" style="font-weight: 700; font-family: roboto; color: #000000;">Risorsa</h3>
+                  <p fxLayout="row">La risorsa allegata sarà caricata ed inclusa tramite collegamento web</p>
+                  <div fxLayout="row">
+                    <mat-form-field appearance="outline" style="cursor: pointer;">
+                      <mat-label id="idAllegato">Allegato</mat-label>
+                      <ngx-mat-file-input #fileInput formControlName="file" placeholder="File allegati" class="font-size-16"
+                        accept="image/*,video/*,audio/*,.pdf" (change)="setFileToUpload()"></ngx-mat-file-input>
+                          <mat-icon matSuffix>folder</mat-icon>
+                      
+                      <mat-error *ngIf="fourthStepFormGroup.get('file').hasError('maxContentSize')">
+                        Errore: La dimensione totale non deve superare
+                        {{fourthStepFormGroup.get('file')?.getError('maxContentSize').maxSize | byteFormat}} ({{fourthStepFormGroup.get('file')?.getError('maxContentSize').actualSize
+                        | byteFormat}}).
+                      </mat-error>
+                    </mat-form-field>
+                   <!-- <button mat-icon-button color="warn" aria-label="trash">
+                      <mat-icon>delete</mat-icon>
+                    </button>-->
+                  </div>
+                
+                </div>
+                <div fxLayout="row" fxLayoutGap="74%" fxFlexOffset="3%">
+                  <div fxLayoutGap="10px" fxFlex="50%">
+                    <button type="button"  color="primary" mat-flat-button fxFlex="150" matStepperPrevious>Indietro</button>
+                    <button type="button" color="primary" mat-flat-button fxFlex="150" (click)="back()">Annulla</button>
+                  
+                  </div>
+                  <button type="button" [disabled]="!fourthStepFormGroup.valid" color="primary" mat-flat-button fxFlex="150" matStepperNext>Avanti</button>
+                  
+                </div>
+              </form>
+            </div>
+            
+          </mat-step>
+          <!-- #################### Fourth step end ###################-->
+          <mat-step [stepControl]="fifthStepFormGroup">
+            <ng-template matStepLabel>Invio</ng-template>
+            <form [formGroup]="fifthStepFormGroup" fxLayout="column">
+              <div fxLayout="column" fxFlex="55" style="padding: 40px;">
+                <h5 fxLayout="row"  fxFlexOffset="3%" style="font-weight: 600; font-family: roboto; color: #000000;">Il messaggio CAP-IT è corretto ed è pronto per essere firmato ed inviato</h5>
+                <p fxLayout="row" style="font-weight: 400; font-family: roboto; color: #9b9b9b;">Specificare la firma e i canali di publicazione della risorsa o salvare il messaggio per inviarlo successivamente o<br>
+                    per farlo prendere in carico ad un soggetto abilitato all'invio e la firma.
+                  Il salvataggio permette anche di definire il <br> messaggio come template.
+                </p>
+              </div>
+              <div fxLayout="row">
+                <div fxLayout="column" fxFlex="50" style="padding: 40px;">
+                  <h5 fxLayout="row"  fxFlexOffset="3%" style="font-weight: 600; font-family: roboto; color: #000000;">Firma</h5>
+                  <p fxLayout="row" style="font-weight: 400; font-family: roboto; color: #9b9b9b;">
+                    Il messaggio prodotto può essere firmato con una delle firme <br> predefinite sul sistema (necessaria la password) o firmare con altri <br> sistemi scaricando e ricaricando il file.
+                  </p>
+                  <div fxLayout="row">
+                    <mat-form-field name="category" ngDefaultControl fxLayout="column" fxFlex="50">
+                      <mat-label>Firme predefinite</mat-label>
+                      <mat-select [disabled]="false" [compareWith]="compareFunction" formControlName="senderSignature" >
+                        <mat-option *ngFor="let sign of messagesignature" [value]="sign">
+                          {{sign}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <mat-divider [vertical]="true"></mat-divider>
+                <div fxLayout="column" fxFlex="50" style="padding: 40px;">
+                  <h5 fxLayout="row"  fxFlexOffset="3%" style="font-weight: 600; font-family: roboto; color: #000000;">Canali di pubblicazione</h5>
+                  <p fxLayout="row" style="font-weight: 400; font-family: roboto; color: #9b9b9b;">
+                    I canali di pubblicazione devono essere definiti esplicitamente. Alcune firme <br> non sono abilitate per tutti i canali e messaggi potrebbero esse scartati.
+                  </p>
+                  <div fxLayout="row" *ngFor="let chanel of messageChanel">
+                    <mat-checkbox  [checked]="chanel.id == 3" [disabled]="true">{{chanel.value}}</mat-checkbox>
+                  <!--[disabled]="chanel.id !== 3"-->
+                  </div>
+                </div>
+              </div>
+              <div fxLayout="row" fxLayoutGap="74%" fxFlexOffset="3%">
+                <div fxLayoutGap="10px" fxFlex="50%">
+                  <button type="button"  color="primary" mat-flat-button fxFlex="150" matStepperPrevious>Indietro</button>
+                  <button type="button" color="primary" mat-flat-button fxFlex="150" (click)="back()">Annulla</button>
+                </div>
+                <button type="button" color="warn" mat-flat-button fxFlex="150" (click)="sendMessage()">Genera ed invia CAP</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- #################### Fifth step end ###################-->
+        </mat-horizontal-stepper>
+    </div>
+    <div fxLayout="column">
+
+    </div>
+  </div>

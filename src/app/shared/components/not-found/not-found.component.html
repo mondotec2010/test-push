@@ -1,0 +1,23 @@
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="center center" fxFlexOffset="16px">
+    <mat-card fxLayout="column" fxFlex.gt-sm="720px" fxFlex.lt-sm="300px" style="border: 1px solid red;">
+      <mat-card-header fxLayout="row" fxLayoutGap="0">
+        <div fxLayout="column">
+          <mat-card-title fxFlexOffset="3px"></mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content fxLayout="row" fxLayoutAlign="center">
+        <div fxLayout="column">
+          <mat-panel-title fxFlexOffset="32px" style="font-size: 40px; font-weight: 500; color: red"
+            fxLayoutAlign="center start" fxLayoutGap="24px">
+            <mat-icon style="font-size: 45px;">sentiment_very_dissatisfied
+            </mat-icon>
+            <span>404</span>
+          </mat-panel-title>
+          <span fxFlexOffset="32px"
+            style="font-size: 30px; font-weight: 500">{{'Multilang.notFound' | translate}}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

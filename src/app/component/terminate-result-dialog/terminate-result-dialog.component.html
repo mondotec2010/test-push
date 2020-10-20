@@ -1,0 +1,4 @@
+<p *ngIf="data.result == 'success'">Messaggio terminato con successo</p>
+<p *ngIf="data.result == 'failed'">Si è verificato un errore</p>
+<button id="close-button" type="button" mat-stroked-button color="primary" [mat-dialog-close]
+        cdkFocusInitial>{{ 'Multilang.close' | translate }}</button>

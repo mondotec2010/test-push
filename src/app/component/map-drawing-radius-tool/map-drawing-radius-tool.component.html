@@ -1,0 +1,26 @@
+<div>
+    <agm-map 
+        [clickableIcons]="false"
+        [streetViewControl]="false" 
+        [gestureHandling]="'cooperative'"
+        [zoomControl]="true"
+        [scrollwheel]="false"
+        drawingControl = "true"
+        [disableDoubleClickZoom]="true"
+        style="width: 100%; height: 500px;"
+        (mapReady)="onMapReady($event)"
+        id="coords">
+        <agm-polygon [(paths)]="paths"></agm-polygon>
+    </agm-map>
+    <!-- /. Mappa per il tool punto-raggio  -->
+    <mat-form-field *ngIf="this.markerInserted" fxFlexOffset="16px">
+        <!-- <mat-label>{{ 'Multilang.subject' | translate }}</mat-label> -->
+        <mat-label>Inserisci il raggio</mat-label>
+        <input [(ngModel)]="radiusKm" (ngModelChange)="onRadiusInserted()" type="number" matInput #subject maxlength="50" required placeholder="Raggio in km"
+          name="radius-distance" />
+          <!-- {{ this.radiusKm }} -->
+        <!-- <mat-hint>{{subject.value.length}} / 50</mat-hint> -->
+    </mat-form-field>
+    <!-- /. Raggio in km -->
+</div>
+

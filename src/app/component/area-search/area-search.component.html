@@ -1,0 +1,86 @@
+<!-- <div class="container ml-2">
+    <mat-form-field class="example-full-width">
+        <mat-label>Area</mat-label>
+        <input matInput placeholder="Cerca..." [(ngModel)]="query">
+    </mat-form-field>
+
+</div> -->
+<div class="container-fluid">
+    <div id="searchForm-container">
+        <mat-form-field>
+            <mat-label>Cerca un area...</mat-label>
+            <input matInput placeholder="e.g. Roma Città Metropolitana" [(ngModel)]="query" name="query"
+                spellcheck="false">
+        </mat-form-field>
+        <button type="submit" mat-stroked-button class="ml-2" (click)="searchArea()">Trova</button>
+        <mat-spinner diameter="35" *ngIf="loading" id="loading-spinner"></mat-spinner>
+    </div>
+    <!-- <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Cerca un'area..." aria-label="Number" matInput formControlName="area"
+            [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="autocompleteDisplayWith">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.area}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field> -->
+
+
+    <!-- <app-detail-map-v2 [aree]="foundArea"></app-detail-map-v2> -->
+
+    <div id="searchList-container">
+
+        <mat-tab-group #tabGroup mat-align-tabs="start">
+            <mat-tab label="Ricerca">
+                <div id="searchList-container-body">
+                    <div *ngFor="let feature of featureCollection" class="item-span">
+                        <button mat-stroked-button class="icon-container" (click)="onItemExplore(feature)" matTooltip="Mostra" [matTooltipShowDelay]="1000">
+                            <mat-icon aria-hidden="false" aria-label="explore location icon" [inline]="true">explore</mat-icon>
+                            Mostra
+                        </button>
+                        <button mat-stroked-button class="icon-container" (click)="onItemAddToTarget(feature)" matTooltip="Aggiungi" [matTooltipShowDelay]="1000">
+                            <mat-icon aria-hidden="false" aria-label="add location icon" [inline]="true">add_location</mat-icon>
+                            Aggiungi
+                        </button>
+                        <h4>{{ feature.area }}</h4>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Aggiunti al target">
+                <div id="searchList-container-body">
+                    <div *ngFor="let feature of targetList" class="item-span">
+                        <button mat-stroked-button class="icon-container" (click)="onItemExplore(feature)" matTooltip="Mostra" [matTooltipShowDelay]="1000">
+                            <mat-icon aria-hidden="false" aria-label="explore location icon" [inline]="true">explore</mat-icon>
+                            Mostra
+                        </button>
+                        <button mat-stroked-button class="icon-container" (click)="onItemRemoveToTarget(feature)" matTooltip="Elimina" [matTooltipShowDelay]="1000">
+                            <mat-icon aria-hidden="false" aria-label="add location icon" [inline]="true">delete</mat-icon>
+                            Elimina
+                        </button>
+                        <h4>{{ feature.area }}</h4>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+        <!-- <div id="searchList-container-header">
+            <h1>
+                <mat-icon aria-hidden="false" aria-label="Search icon">search</mat-icon>
+                Risultati ricerca:
+            </h1>
+        </div> -->
+
+    </div>
+
+
+    <div class="map-container">
+        <agm-map #AgmMap style="width: 100%; height: 100%;" (mapReady)="onMapReady($event)" [zoomControl]="false"
+            [scrollwheel]="false" [streetViewControl]="false">
+            <agm-data-layer [geoJson]="selectedAreaGeoJson" [style]="styleFunc"></agm-data-layer>
+        </agm-map>
+        <div *ngIf="!showingArea" class="no-map-to-show">
+            <span>Cliccare su Mostra per visualizzare una mappa.</span>
+        </div>
+    </div>
+
+</div>
